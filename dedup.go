@@ -2,6 +2,12 @@
 // the $PATH environment variable on linux.
 package main
 
+import "os"
+
+func getpath() string {
+	return os.Getenv("PATH")
+}
+
 func main() {
 
 }
