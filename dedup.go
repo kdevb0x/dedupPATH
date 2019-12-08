@@ -55,15 +55,32 @@ func doflags() {
 	pflag.StringVarP(&sep, "sep", "s", "", "Use sep as a sepatator while parsing input string.")
 	pflag.Parse()
 }
+
+func usage() {
+	n := os.Args[0]
+	u := fmt.Sprintf("Usage: \n %s [-s] STRING\n", n)
+	fmt.Printf("%s\n", u)
+	pflag.PrintDefaults()
+}
+
 func main() {
-	var initial = os.Args[1]
+	doflags()
+	var initial string
+	if len(pflag.Args()) != 1 {
+		usage()
+		os.Exit(1)
+	}
+	initial = pflag.Args()[0]
 	// if os.Args[1] is the literal string "path", $PATH env var is used.
 	if initial == "path" {
 		start := os.Getenv("$PATH")
 		final := removeDuplicates(start, ":")
 		fmt.Fprintf(os.Stdout, "%s\n", final)
 	}
-	if len(sep) > 0 {
-
+	// user suplied string and seperator
+	if len(sep) > 0 && len(pflag.Args()) == 1 {
+		final := removeDuplicates(initial, sep)
+		fmt.Fprintf(os.Stdout, "%s\n", final)
 	}
+	os.Exit(0)
 }
