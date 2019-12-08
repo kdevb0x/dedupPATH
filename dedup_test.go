@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 	"testing"
 )
@@ -36,6 +35,15 @@ var cases = []struct {
 	},
 }
 
+func TestRemoveIndexString(t *testing.T) {
+	var testcase = []string{"removeme", "keepme"}
+	got := removeIndexString(testcase, 0)
+	if len(got) != 1 {
+		t.Fail()
+	}
+
+}
+
 func TestGetPath(t *testing.T) {
 	var path = os.Getenv("PATH")
 	if p := getpath(); p != path {
@@ -44,6 +52,7 @@ func TestGetPath(t *testing.T) {
 	}
 }
 
+/*
 func TestPathDedup(t *testing.T) {
 	for _, tc := range cases {
 		if got := pathdedup(tc.tcase); got != tc.want {
@@ -52,3 +61,4 @@ func TestPathDedup(t *testing.T) {
 		}
 	}
 }
+*/
